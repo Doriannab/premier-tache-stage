@@ -67,8 +67,8 @@ heading: '600 Utilisateurs',
   ];
    
         return (
-          <div className='w-full py-10 bg-gray-200 h-60 lg:h-screen'>
-            <div className="w-full scrolled lg:w-full overflow sm:w-full">
+          <div className='w-full bg-gray-200 h-60 lg:h-screen'>
+            <div className="w-full scrolled lg:w-full overflow sm:w-full top-20">
                {/* <div className="w-full h-16 mt-12 bg-white lg:h-20 lg:w-full ">
                 <h2 className="mt-4 ml-10 text-xl text-black lg:text-4xl lg:ml-20 ">Bienvenue Sur RED Product</h2>
                 <p className="mb-24 ml-10 text-sm text-black lg:mb-24 lg:ml-20">Lorem ipsum dolor sit amet consectetur</p>

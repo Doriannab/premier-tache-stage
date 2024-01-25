@@ -41,14 +41,14 @@ function Connection() {
 
    
 return (
-    <main className="flex flex-col items-center justify-center w-full h-screen gap-3 mx-auto inscrire bg-connect"  style={{backgroundColor :' #494C4F'}}>
+    <main className="flex flex-col items-center justify-center w-full h-full gap-3 mx-auto inscrire bg-connect"  style={{backgroundColor :' #494C4F'}}>
     <div className='flex gap-4'>
        <div className=''>
        <img src={Logo} alt="" className='w-8'  />
        </div>
     <h2 className='text-2xl font-bold text-white whitespace-nowrap text-opacity-3'>RED PRODUCT</h2>
     </div>
-<section className="flex w-[25rem] shadow rounded p-8 flex-col gap-14 border bg-white" onSubmit={(e) =>handleSubmit(e)}>
+<section className="flex w-[25rem] shadow rounded p-8 flex-col gap-12 border bg-white" onSubmit={(e) =>handleSubmit(e)}>
    <div className="text-2xl text-center text-black font">Connectez-vous en tant que Admin</div>
    <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
        <Input type="text" placeholder="E-mail" value={username} className="w-full bg-transparent border-none outline-none focus:outline-none" onChange={(e) =>setUsername(e.target.value) }/>

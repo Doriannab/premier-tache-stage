@@ -82,7 +82,7 @@ function HotelContenu () {
               />
             </a>
             <div className="p-2">
-              <p className="text-xs text-neutral-600 text-[#8D4B38]">
+              <p className="text-xs  text-[#8D4B38]">
                 {hotel.location}
               </p>
               <h5 className="text-2xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
