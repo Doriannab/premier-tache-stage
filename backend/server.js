@@ -14,6 +14,8 @@ mongoose.connect(process.env.DB_URL).then((result)=>{
     console.log(err);
 })
 
+APP.use(cors());
+
 APP.use(cors(
     {
         origin:"https://premier-tache-stage-idtt.vercel.app/"
