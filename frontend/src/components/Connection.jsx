@@ -10,7 +10,7 @@ import { getErrorMessage } from './util/GetError';
 
 
 function Connection() {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     // eslint-disable-next-line
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ function Connection() {
         try{
             // setLoading(true);
             let data = {
-                username,
+                email,
                 password
             }
             const response = await AuthServices.loginUser(data);
@@ -51,7 +51,7 @@ return (
 <section className="flex w-[25rem] shadow rounded p-8 flex-col gap-12 border bg-white" onSubmit={(e) =>handleSubmit(e)}>
    <div className="text-2xl text-center text-black font">Connectez-vous en tant que Admin</div>
    <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
-       <Input type="text" placeholder="E-mail" value={username} className="w-full bg-transparent border-none outline-none focus:outline-none" onChange={(e) =>setUsername(e.target.value) }/>
+       <Input type="text" placeholder="E-mail" value={email} className="w-full bg-transparent border-none outline-none focus:outline-none" onChange={(e) =>setEmail(e.target.value) }/>
    </div>
    <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
        <Input type="password" placeholder="Mot de passe" value={password}
@@ -65,7 +65,7 @@ return (
  </div>
    </div>
    <button loading={setLoading ? 'loading' : ''} className="py-3 text-xl font-bold text-center text-white duration-300 transform bg-gray-700 rounded hover:bg-gray-500"
-   onClick={handleSubmit} disabled={!username || !password}>
+   onClick={handleSubmit} disabled={!email || !password}>
    Se Connecter 
    </button>
 </section>

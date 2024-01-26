@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const SERVER_URL = 'https://anna-web.onrender.com/api';
+const SERVER_URL = 'http://localhost:5000/api';
 
 
 const registerUser = (data)=>{

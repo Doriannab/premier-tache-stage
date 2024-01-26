@@ -5,7 +5,7 @@ const {Schema} = mongoose;
 const toDoSchema = new Schema({
     name:{type:String,required:true},
     address:{type:String,required:true},
-    username:{type:String,required:true},
+    email:{type:String,required:true},
     tel:{type:String},
     price: {type: String},
     devise:{type:String,required:true},

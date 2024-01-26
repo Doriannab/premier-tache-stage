@@ -6,13 +6,13 @@ const secretKey = process.env.JWT_SECRET;
 
 
 async function registerUser(req,res){
-    let {fullName,username,password} = req.body;
+    let {fullName,email,password} = req.body;
     try{
-        const duplicate = await User.find({username});
+        const duplicate = await User.find({email});
         if(duplicate && duplicate.lenght > 0){
             return res.status(400).send({message: 'User alreaded registered'});
         }
-        let user = new User({fullName,username,password});
+        let user = new User({fullName,email,password});
         const result = await user.save();
         console.log(result);    
 
@@ -28,8 +28,8 @@ async function registerUser(req,res){
 
 async function loginUser(req,res){
     try{
-        const {username,password} = req.body;
-        const user = await User.findOne({username}); 
+        const {email,password} = req.body;
+        const user = await User.findOne({email}); 
         if(!user){
           return res.status(404).send({message:"Authentication failed!"});
 
@@ -42,7 +42,7 @@ async function loginUser(req,res){
         let token =  jwt.sign({userId:user?._id},secretKey,{expiresIn:'1h'});
         let finalData = {
             userId:user?._id,
-            username:user?.username,
+            email:user?.email,
             fullName:user?.fullName,
             token  
         }   

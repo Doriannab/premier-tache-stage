@@ -9,7 +9,7 @@ import AuthServices from './services/authServices';
 
 
 function Inscription() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');
     // eslint-disable-next-line
@@ -21,7 +21,7 @@ function Inscription() {
         setLoading(true);
         const data = {
             fullName,
-            username,
+            email,
             password 
         };
 
@@ -47,12 +47,12 @@ return (
     <section className="flex w-[24rem] shadow rounded p-4 flex-col gap-10 border bg-white" onSubmit={(e) =>handleSubmit(e)}>
         <div className="text-xl text-center text-black ">Inscrivez-vous en tant que Admin</div>
         <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
-            <input type="text" placeholder="Nom" value={fullName} className="w-full border-none outline-none bg-transparent-25 focus:outline-none"
+            <input type="text" placeholder="Nom" value={fullName} className="w-full border-none outline-none bg-transparent focus:outline-none"
                 onChange={(e) =>setFullName(e.target.value) }
             />
         </div>
         <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
-            <input type="text" placeholder="E-mail" value={username} className="w-full bg-transparent border-none outline-none focus:outline-none" onChange={(e) =>setUsername(e.target.value)}/>
+            <input type="text" placeholder="E-mail" value={email} className="w-full bg-transparent border-none outline-none focus:outline-none" onChange={(e) =>setEmail(e.target.value)}/>
         </div>
         <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
             <input type="password" placeholder="Mot de passe" value={password} className="w-full bg-transparent border-none outline-none focus:outline-none" onChange={(e) =>setPassword(e.target.value) }/>
@@ -63,7 +63,7 @@ return (
         Accepter les termes et la politique
       </div>
         </div>
-        <button onClick={handleSubmit} loading={setLoading ? 'loading' : ''}  disabled={!username || !password}
+        <button onClick={handleSubmit} loading={setLoading ? 'loading' : ''} disabled={!email || !password}
         className="py-3 text-xl font-bold text-white duration-300 transform bg-gray-700 rounded hover:bg-gray-500">S'inscrire</button>
 
     </section>
