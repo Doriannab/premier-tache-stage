@@ -18,7 +18,7 @@ APP.use(cors());
 
 APP.use(cors(
     {
-        origin:"https://premier-tache-stage-idtt.vercel.app/"
+        origin:"https://premier-tache-stage-idtt.vercel.app"
     }
 ));
 APP.use(express.json()); 
