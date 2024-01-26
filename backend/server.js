@@ -8,7 +8,11 @@ const toDoRoutes = require('./routes/ToDoRoutes');
 
 const PORT = process.env.PORT || 5000;
 
-APP.use(cors());
+APP.use(cors(
+    {
+        origin:'https://premier-tache-stage.vercel.app/'
+    }
+));
 APP.use(express.json()); 
 
 APP.use('/api',authRoutes);
