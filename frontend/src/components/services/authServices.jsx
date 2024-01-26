@@ -9,7 +9,7 @@ const registerUser = (data)=>{
 }
 
 const loginUser = (data)=>{
-    return axios.post(SERVER_URL+'login',data);
+    return axios.post(SERVER_URL+'api/login',data);
 }
 
 
