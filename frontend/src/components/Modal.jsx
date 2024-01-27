@@ -49,11 +49,11 @@ const handleApi = async () => {
 }
 
 
-// useEffect(() =>{
-//     if(!localStorage.getItem('token')){
-//         Navigate('/login');
-//     }
-// }, [])
+useEffect(() =>{
+    if(!localStorage.getItem('token')){
+        Navigate('/login');
+    }
+}, [])
 
 
    

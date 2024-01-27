@@ -47,7 +47,7 @@ return (
     <section className="flex w-[24rem] shadow rounded p-4 flex-col gap-10 border bg-white" onSubmit={(e) =>handleSubmit(e)}>
         <div className="text-xl text-center text-black ">Inscrivez-vous en tant que Admin</div>
         <div className="w-full text-lg duration-300 transform bg-transparent border-b-2 focus-within:border-gray-500">
-            <input type="text" placeholder="Nom" value={fullName} className="w-full border-none outline-none bg-transparent focus:outline-none"
+            <input type="text" placeholder="Nom" value={fullName} className="w-full bg-transparent border-none outline-none focus:outline-none"
                 onChange={(e) =>setFullName(e.target.value) }
             />
         </div>
