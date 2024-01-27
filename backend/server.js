@@ -15,13 +15,10 @@ const storage = multer.diskStorage({
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
       cb(null, file.fieldname + '-' + uniqueSuffix)
     }
-  })
-  
+  });
   const upload = multer({ storage: storage })
-
-
-
-
+  
+ 
 
 const PORT = process.env.PORT || 5000;
 
@@ -35,7 +32,7 @@ APP.use(cors());
 
 APP.use(cors(
     {
-        origin:"https://premier-tache-stage-idtt.vercel.app"
+       origin: "https://premier-tache-stage-idtt.vercel.app"
     }
 ));
 APP.use(express.json()); 
