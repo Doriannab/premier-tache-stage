@@ -145,9 +145,6 @@ const button = () => {
           aria-expanded="false">
           <span className="[&>svg]:w-8">
           <IoIosNotifications className="w-8 h-8 text-black" />
-          {user && 
-          <li><Link to="/">Home</Link></li>
-            }
           </span>
         </div>
       </div>

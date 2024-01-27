@@ -1,59 +1,78 @@
 import { MdPhotoCamera } from "react-icons/md";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa";
+import { Navigate } from "react-router-dom";
+import { message } from "antd";
+import { getErrorMessage } from "./util/GetError";
+import { getUserDetails } from "./util/GetUser";
+import ToDoServices from "./services/toDoServices";
 
 function Modal() {
 const [name,setName] = useState("");
-const [address,setaddress] = useState("");
-const [username,setUsername] = useState("");
-const [number,setNumber] = useState("");
+const [address,setAddress] = useState("");
+const [email,setEmail] = useState("");
+const [tel,setTel] = useState("");
 const [price,setPrice] = useState("");
 const [devise,setDevise] = useState("");
+const [image,setImage] = useState("");
 const [adding, setAdding] = useState(false);
+const [loading, setLoading] = useState(false);
 
 
+const handleApi = async () => { 
+    setLoading(true);
+    try{
+        const userId = getUserDetails()?.userId;
+        const data = {
+            name,
+            address,
+            email,
+            tel,
+            price,
+            devise,
+            image,
+            userId:userId
 
-    const [formData, setFormData] = useState({ 
-        hotelName: '', 
-        address: '', 
-        email: '', 
-        phoneNumber: '',
-        price: '',
-        currency: 'F XOF',
-        image: null,
-    });
+        }
+        const response = await ToDoServices.createToDo(data)
+        console.log(response.data);
+        setLoading(false);
+        message.success('Ajout hotel reussi !');
+        setAdding(false)
+    }catch(err){
+        console.log(err);
+        setLoading(false)
+        message.error(getErrorMessage(err));
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    }
 
-    const closeModal = () => {
-        setIsModalOpen(!isModalOpen);
-    };
+}
 
-    const handleInputChange = (key, value) => {
-        setFormData({ ...formData, [key]: value });
-    };
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        setFormData({ ...formData, image: file });
-    };
+// useEffect(() =>{
+//     if(!localStorage.getItem('token')){
+//         Navigate('/login');
+//     }
+// }, [])
 
-    const handleSubmit = (event) => {
-        event.preventDefault(event);
-        console.log('Form data submitted:', formData);
-    };
+
+   
+
+   
+
+    
 
     return (
         <div className="fixed inset-0 flex items-center w-full h-full bg-white bg-opacity-25">
             <section className="relative items-center justify-center p-6 mx-auto bg-white rounded-md shadow-md overflow">
                 <div className="flex items-center gap-2">
-                    <button onClick={closeModal} className="">
+                    <button open={loading} onCancel={()=>setAdding(true)} className="">
                         <FaArrowLeft className="w-8" />
                     </button>
                     <h1 className="text-xl font-bold text-black capitalize dark:text-black">CREER UN NOUVEAU HOTEL</h1>
                 </div>
                 <p className="mt-2 border-b-2 border-gray-500 border-dashed">  </p>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleApi}>
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                         <div>
                             <label className="text-black ">
@@ -64,7 +83,7 @@ const [adding, setAdding] = useState(false);
                                 type="text"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 value={name}
-                                onChange={(e) => handleInputChange('hotelName', e.target.value)}
+                                onChange={(e) => {setName(e.target.value)}}
                             />
                         </div>
 
@@ -77,7 +96,7 @@ const [adding, setAdding] = useState(false);
                                 type="text"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 value={address}
-                                onChange={(e) => handleInputChange('address', e.target.value)}
+                                onChange={(e) => {setAddress(e.target.value)}}
                             />
                         </div>
                         <div>
@@ -88,8 +107,8 @@ const [adding, setAdding] = useState(false);
                                 id="e-mail"
                                 type="email"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                                value={username}
-                                onChange={(e) => handleInputChange('email', e.target.value)}
+                                value={email}
+                                onChange={(e) => {setEmail(e.target.value)}}
                             />
                         </div>
 
@@ -101,8 +120,8 @@ const [adding, setAdding] = useState(false);
                                 id="number"
                                 type="number"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                                value={number}
-                                onChange={(e) => handleInputChange('numero', e.target.value)}
+                                value={tel}
+                                onChange={(e) => {setTel(e.target.value)}}
                             />
                         </div>
                         <div>
@@ -114,7 +133,7 @@ const [adding, setAdding] = useState(false);
                                 type="number"
                                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                 value={price}
-                                onChange={(e) => handleInputChange('price', e.target.value)}
+                                onChange={(e) => {setPrice(e.target.value)}}
                             />
                         </div>
 
@@ -125,7 +144,7 @@ const [adding, setAdding] = useState(false);
                   <select
                     className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                     value={devise}
-                    onChange={(e) => handleInputChange('currency', e.target.value)}
+                    onChange={(e) => {setDevise(e.target.value)}}
                   >
                     <option>F XOF</option>
                     <option>Dollar</option>
@@ -148,10 +167,10 @@ const [adding, setAdding] = useState(false);
                                         <input
                                             id="file-upload"
                                             name="file-upload"
+                                            value={image}
                                             type="file"
-                                            value={adding}
                                             className="border-white sr-only border-White"
-                                            onChange={handleFileChange}
+                                            onChange={(e) => {setImage(e.target.files[0])}}
                                         />
                                     </label>
                                 </div>
@@ -160,6 +179,8 @@ const [adding, setAdding] = useState(false);
                     </div>
                     <div className="flex justify-end gap-2 mt-6">
                         <button
+                        onClick={()=>handleApi(true)}
+                        value={adding}
                             type="submit"
                             className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-700 focus:outline-none focus:bg-gray-600"
                         >
