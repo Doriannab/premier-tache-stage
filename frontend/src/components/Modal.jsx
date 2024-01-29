@@ -1,11 +1,12 @@
 import { MdPhotoCamera } from "react-icons/md";
 import React, { useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { getErrorMessage } from "./util/GetError";
 import { getUserDetails } from "./util/GetUser";
 import ToDoServices from "./services/toDoServices";
+
 
 function Modal() {
 const [name,setName] = useState("");
@@ -17,9 +18,35 @@ const [devise,setDevise] = useState("");
 const [image,setImage] = useState("");
 const [adding, setAdding] = useState(false);
 const [loading, setLoading] = useState(false);
+const [allToDo,setAllToDo] = useState();
+const navigate = useNavigate();
 
 
-const handleApi = async () => { 
+useEffect(()=>{
+    let user = getUserDetails();
+    const getAllToDo = async ()=>{
+        try{
+            console.log(user?.userId)
+            const response = await ToDoServices.getAllToDo(user?.userId);
+            console.log(response.data);
+            setAllToDo(response.data);
+
+        }catch(err){
+            console.log(err)
+            message.err(getErrorMessage(err));
+        }
+    }
+
+    if(user && user?.userId){
+        getAllToDo();
+    } else {
+        navigate('/template/hotel')
+
+    }
+},[navigate])
+
+
+const handleApi = async ({onSave}) => { 
     setLoading(true);
     try{
         const userId = getUserDetails()?.userId;
@@ -31,9 +58,10 @@ const handleApi = async () => {
             price,
             devise,
             image,
-            userId:userId
+            createdBy:userId
 
         }
+        onSave(data);
         const response = await ToDoServices.createToDo(data)
         console.log(response.data);
         setLoading(false);
@@ -48,17 +76,23 @@ const handleApi = async () => {
 
 }
 
+const getFormattedData = (value)=>{
+    let date = new Date(value);
+    let dateString = date.toDateString();
+    let hh = date.getHours();
+    let min = date.getMinutes();
+    let ss = date.getSeconds();
+    let finalDate = `${dateString} at ${hh}:${min}:${ss}`;
+    return finalDate;
+}
 
-useEffect(() =>{
-    if(!localStorage.getItem('token')){
-        Navigate('/login');
-    }
-}, [])
 
+// useEffect(() =>{
+//     if(!localStorage.getItem('token')){
+//         Navigate('/login');
+//     }
+// }, [])
 
-   
-
-   
 
     
 
@@ -160,14 +194,12 @@ useEffect(() =>{
                                 <MdPhotoCamera className="w-12 h-12 mx-auto text-black opacity-50" />
                                 <div className="flex text-sm text-gray-600">
                                     <label
-                                        htmlFor="file-upload"
                                         className="relative font-medium bg-white rounded-md cursor-pointer text-white-600 hover:text-white focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                                     >
                                         <span className="ml-20 text-center text-black">Ajouter une photo</span>
                                         <input
-                                            id="file-upload"
-                                            name="file-upload"
-                                            value={image}
+                                            id="file"
+                                            name="file"
                                             type="file"
                                             className="border-white sr-only border-White"
                                             onChange={(e) => {setImage(e.target.files[0])}}
@@ -186,6 +218,25 @@ useEffect(() =>{
                         >
                             Enregister
                         </button>
+                        {/* <div>
+                            {allToDo.map((item)=>{
+                                return(
+                                  <div key={item?.id} className={StyleSheet.toDocard}>
+                                  <div>
+                                    <div className={styles.toDoCardHeader}>
+                                    <image />
+                                    <p>{item?.address}</p>
+                                    <h2>{item?.name}</h2>
+                                    <p>{item?.price}</p>
+                                    
+
+                                    </div>
+                                  </div>
+
+                                  </div>  
+                                )
+                            })}
+                        </div> */}
                     </div>
                 </form>
             </section>

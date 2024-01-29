@@ -13,7 +13,7 @@ exports.createToDo = async (req,res)=>{
     }catch(err){
         console.log(err);
         res.status(err);
-    }
+    } 
     
 }
 

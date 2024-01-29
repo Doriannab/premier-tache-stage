@@ -9,10 +9,11 @@ const toDoSchema = new Schema({
     tel:{type:String},
     price: {type: String},
     devise:{type:String,required:true},
+    image:{type:String},
     createdBy:{
         ref:"User",
         type:Schema.ObjectId
-    }
+    },
 },{
     timestamps:true
 });

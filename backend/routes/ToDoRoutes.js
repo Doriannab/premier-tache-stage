@@ -4,7 +4,8 @@ const authenticateToken = require("../middleware/authJwt");
 const router = express.Router();
 
 router.post('/create-to-do',authenticateToken,createToDo);
-router.get('/get-all/:userId',authenticateToken,getAllToDo);
+
+router.get('/get-all-to-do/:userId',authenticateToken,getAllToDo);
 
 
  

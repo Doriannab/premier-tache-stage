@@ -1,4 +1,5 @@
  export function getUserDetails(){
-    let user = JSON.parse(localStorage.getItem('toDoAppUser'));
+   const userDataString = localStorage.getItem('toDOAppUser');
+    const user = JSON.parse(userDataString);
     return user;
  }     

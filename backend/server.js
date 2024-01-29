@@ -5,15 +5,15 @@ const authRoutes = require('./routes/authRoutes');
 const toDoRoutes = require('./routes/ToDoRoutes');
 const APP = express();
 const cors = require("cors");
+const path = require('path');
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, '/uploads')
+    destination: function (req, res, cb) {
+      cb(null, path.join(__dirname, 'uploads'))
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, Date.now() +'-' + file.originalname)
     }
   });
   const upload = multer({ storage: storage })
@@ -30,15 +30,11 @@ mongoose.connect(process.env.DB_URL).then((result)=>{
 
 APP.use(cors());
 
-APP.use(cors(
-    {
-       origin: "https://premier-tache-stage-idtt.vercel.app"
-    }
-));
+
 APP.use(express.json()); 
 APP.use(express.urlencoded({extended: false}));
-APP.use('api/uploads', express.static('upload'));
-APP.use(upload.single('image'))
+APP.use('api/uploads', express.static('uploads'));
+APP.use(upload.single('image'));
 
 APP.use('/api',authRoutes);
 APP.use('/api/todo',toDoRoutes,);
